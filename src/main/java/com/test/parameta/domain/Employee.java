@@ -1,13 +1,11 @@
 package com.test.parameta.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Data
@@ -19,10 +17,26 @@ public class Employee {
     private Long id;
     private String name;
     private String lastName;
+
+    @Enumerated(EnumType.STRING)
     private DocumentType documentType;
     private String documentNumber;
     private LocalDate birthdate;
     private LocalDate bindingDate;
+    @Transient
+    private Period bindingTime;
+    @Transient
+    private Period age;
     private String role;
     double salary;
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+        this.age = Period.between(birthdate, LocalDate.now());
+    }
+
+    public void setBindingDate(LocalDate bindingDate) {
+        this.bindingDate = bindingDate;
+        this.bindingTime = Period.between(bindingDate, LocalDate.now());
+    }
 }
