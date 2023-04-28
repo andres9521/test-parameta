@@ -15,14 +15,20 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
+
     private String lastName;
 
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
+
     private String documentNumber;
+
     private LocalDate birthdate;
+
     private LocalDate bindingDate;
+
     @Transient
     private Period bindingTime;
     @Transient
@@ -31,6 +37,10 @@ public class Employee {
     double salary;
 
     public void setBirthdate(LocalDate birthdate) {
+        int years = Period.between(birthdate, LocalDate.now()).getYears();
+        if(years<18){
+            throw new IllegalArgumentException("Trabajador menor de edad");
+        }
         this.birthdate = birthdate;
         this.age = Period.between(birthdate, LocalDate.now());
     }
