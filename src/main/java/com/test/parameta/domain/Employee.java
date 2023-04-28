@@ -1,8 +1,7 @@
 package com.test.parameta.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -33,8 +32,10 @@ public class Employee {
     private Period bindingTime;
     @Transient
     private Period age;
+
     private String role;
-    double salary;
+
+    private double salary;
 
     public void setBirthdate(LocalDate birthdate) {
         int years = Period.between(birthdate, LocalDate.now()).getYears();
